@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Random Letter Entry – GSAP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at top, #111, #000);
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+  }
+
+  .wrap {
+    perspective: 1000px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    color: #fff;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    display: flex;
+    gap: 0.05em;
+  }
+
+  .char {
+    display: inline-block;
+    filter: blur(12px);
+    opacity: 0;
+  }
+
+  button {
+    margin-top: 30px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(135deg,#ff6a00,#ffb347);
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <h1 id="text">ADVANCED GSAP</h1>
+  <button onclick="animateText()">REPLAY</button>
+</div>
+
+<script>
+const textEl = document.getElementById("text");
+const originalText = textEl.innerText;
+
+// split text into spans
+function splitText() {
+  textEl.innerHTML = "";
+  [...originalText].forEach(letter => {
+    const span = document.createElement("span");
+    span.className = "char";
+    span.textContent = letter === " " ? "\u00A0" : letter;
+    textEl.appendChild(span);
+  });
+}
+
+splitText();
+
+function randomChar() {
+  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  return chars[Math.floor(Math.random() * chars.length)];
+}
+
+function animateText() {
+  const chars = document.querySelectorAll(".char");
+
+  chars.forEach((char, i) => {
+    const finalChar = char.textContent;
+
+    gsap.fromTo(char,
+      {
+        x: gsap.utils.random(-200, 200),
+        y: gsap.utils.random(-200, 200),
+        z: gsap.utils.random(-400, 400),
+        rotateX: gsap.utils.random(-180, 180),
+        rotateY: gsap.utils.random(-180, 180),
+        opacity: 0,
+        filter: "blur(16px)"
+      },
+      {
+        duration: 1.4,
+        x: 0,
+        y: 0,
+        z: 0,
+        rotateX: 0,
+        rotateY: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        ease: "expo.out",
+        delay: i * 0.06,
+        onStart() {
+          let scrambleCount = 0;
+          const scramble = setInterval(() => {
+            char.textContent = randomChar();
+            scrambleCount++;
+            if (scrambleCount > 6) {
+              clearInterval(scramble);
+              char.textContent = finalChar;
+            }
+          }, 40);
+        }
+      }
+    );
+  });
+}
+
+// auto start
+animateText();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium GSAP Letter Entry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #0b0b0e;
+    font-family: Inter, system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #f5f5f7;
+    display: flex;
+    justify-content: center;
+  }
+
+  .char {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(10px);
+    transform-origin: 50% 60%;
+  }
+
+  button {
+    margin-top: 40px;
+    padding: 10px 26px;
+    border-radius: 24px;
+    border: none;
+    background: #ffffff10;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="headline">PREMIUM MOTION</h1>
+  <button onclick="play()">Replay</button>
+</div>
+
+<script>
+const text = document.getElementById("headline");
+const original = text.textContent;
+
+function split() {
+  text.innerHTML = "";
+  [...original].forEach(l => {
+    const span = document.createElement("span");
+    span.className = "char";
+    span.textContent = l === " " ? "\u00A0" : l;
+    text.appendChild(span);
+  });
+}
+
+split();
+
+function play() {
+  const chars = gsap.utils.toArray(".char");
+
+  gsap.set(chars, {
+    opacity: 0,
+    y: 30,
+    rotateX: gsap.utils.random(-25, 25),
+    filter: "blur(12px)"
+  });
+
+  gsap.to(chars, {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    filter: "blur(0px)",
+    duration: 1.1,
+    ease: "power3.out",
+    stagger: {
+      each: 0.045,
+      from: "random"
+    }
+  });
+}
+
+play();
+</script>
+
+</body>
+</html>

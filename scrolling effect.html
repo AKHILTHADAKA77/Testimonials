@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Giant Scrolling Text</title>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<style>
+html,body{
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.spacer{
+  height:120vh;
+}
+
+.section{
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+
+.giant-text{
+  white-space:nowrap;
+  font-size:18vw;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.04em;
+}
+</style>
+</head>
+
+<body>
+
+<div class="spacer"></div>
+
+<section class="section">
+  <div class="giant-text">GIANT SCROLLING TEXT — GIANT SCROLLING TEXT</div>
+</section>
+
+<div class="spacer"></div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to(".giant-text",{
+  xPercent:-60,
+  ease:"none",
+  scrollTrigger:{
+    trigger:".section",
+    start:"top bottom",
+    end:"bottom top",
+    scrub:1
+  }
+});
+</script>
+
+</body>
+</html>

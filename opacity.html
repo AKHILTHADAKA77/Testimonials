@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP Text Fade</title>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-size: 48px;
+      font-family: Arial, sans-serif;
+    }
+    .text {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="text">Hello GSAP</div>
+
+  <script>
+    gsap.timeline({ repeat: -1 })
+      .to(".text", { opacity: 1, duration: 1 })
+      .to(".text", { opacity: 1, duration: 1.5 })
+      .to(".text", { opacity: 0, duration: 1 });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cinematic Scroll Letter Reveal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins",sans-serif;
+}
+
+body{
+  min-height:220vh;
+  background:
+    radial-gradient(circle at 20% 20%, #2563eb33, transparent 40%),
+    radial-gradient(circle at 80% 80%, #9333ea33, transparent 40%),
+    linear-gradient(135deg,#020617,#020617);
+  display:flex;
+  justify-content:center;
+}
+
+/* ================= SECTION ================= */
+.section{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ================= TEXT ================= */
+.reveal{
+  font-size:92px;
+  font-weight:900;
+  letter-spacing:6px;
+  color:white;
+  display:flex;
+  overflow:hidden;
+}
+
+/* LETTER */
+.reveal span{
+  display:inline-block;
+  transform-origin:50% 100%;
+  clip-path:inset(100% 0 0 0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="section"></div>
+
+<div class="section">
+  <h1 class="reveal">CRAFTED UI</h1>
+</div>
+
+<div class="section"></div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ================= SPLIT LETTERS ================= */
+const text = document.querySelector(".reveal");
+const chars = text.textContent.split("");
+text.textContent = "";
+
+chars.forEach(c=>{
+  const span=document.createElement("span");
+  span.textContent = c === " " ? "\u00A0" : c;
+  text.appendChild(span);
+});
+
+/* ================= TIMELINE ================= */
+const tl = gsap.timeline({
+  scrollTrigger:{
+    trigger: ".reveal",
+    start: "top 75%",
+    end: "top 35%",
+    scrub: false,
+    toggleActions: "play reverse play reverse"
+  }
+});
+
+/* ================= ANIMATION ================= */
+tl.fromTo(".reveal span",
+{
+  y: 120,
+  rotationX: 35,
+  opacity: 0,
+  clipPath: "inset(100% 0 0 0)"
+},
+{
+  y: 0,
+  rotationX: 0,
+  opacity: 1,
+  clipPath: "inset(0% 0 0 0)",
+  duration: 1.1,
+  ease: "power4.out",
+  stagger: {
+    each: 0.055,
+    from: "start"
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Letter Reveal Animation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+/* ========== RESET ========== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins",sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(circle at 20% 20%, #2563eb55, transparent 40%),
+    radial-gradient(circle at 80% 80%, #9333ea55, transparent 40%),
+    linear-gradient(135deg,#020617,#020617);
+  overflow:hidden;
+}
+
+/* ========== TEXT ========== */
+.reveal-text{
+  font-size:90px;
+  font-weight:900;
+  letter-spacing:6px;
+  color:white;
+  display:flex;
+}
+
+/* EACH LETTER */
+.reveal-text span{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(60px);
+  filter:blur(8px);
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="reveal-text">ANIMATE</h1>
+
+<script>
+/* ========== SPLIT TEXT INTO LETTERS ========== */
+const text = document.querySelector(".reveal-text");
+const letters = text.textContent.split("");
+text.textContent = "";
+
+letters.forEach(letter => {
+  const span = document.createElement("span");
+  span.textContent = letter === " " ? "\u00A0" : letter;
+  text.appendChild(span);
+});
+
+/* ========== GSAP REVEAL ========== */
+gsap.to(".reveal-text span", {
+  opacity: 1,
+  y: 0,
+  filter: "blur(0px)",
+  duration: 1,
+  ease: "power4.out",
+  stagger: 0.06
+});
+</script>
+
+</body>
+</html>

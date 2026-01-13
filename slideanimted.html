@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multiple Card Slide Effects</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#020617;
+  font-family:system-ui;
+}
+
+/* grid */
+.wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
+  width:90%;
+  max-width:1000px;
+}
+
+/* card base */
+.card{
+  height:180px;
+  background:#020617;
+  color:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+/* front */
+.front{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:2;
+}
+
+/* slide panel */
+.panel{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  transition:transform .6s cubic-bezier(.25,.8,.25,1);
+}
+
+/* ---------- EFFECT TYPES ---------- */
+
+/* slide up */
+.slide-up .panel{
+  transform:translateY(100%);
+}
+.slide-up.active .panel{
+  transform:translateY(0);
+}
+
+/* slide out */
+.slide-out .panel{
+  transform:translateY(0);
+}
+.slide-out.active .panel{
+  transform:translateY(-100%);
+}
+
+/* slide in */
+.slide-in .panel{
+  transform:translateY(100%);
+}
+.slide-in.active .panel{
+  transform:translateY(0);
+}
+
+/* slide in + out */
+.slide-in-out .panel{
+  transform:translateY(100%);
+}
+.slide-in-out.active .panel{
+  transform:translateY(0);
+}
+.slide-in-out.leave .panel{
+  transform:translateY(-100%);
+}
+
+/* text */
+h3{margin:0;font-weight:600}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- CARD 1 -->
+  <div class="card slide-up">
+    <div class="front"><h3>Slide UP</h3></div>
+    <div class="panel"><h3>Up Panel</h3></div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card slide-out">
+    <div class="front"><h3>Slide OUT</h3></div>
+    <div class="panel"><h3>Out Panel</h3></div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card slide-in">
+    <div class="front"><h3>Slide IN</h3></div>
+    <div class="panel"><h3>In Panel</h3></div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card slide-in-out">
+    <div class="front"><h3>In → Out</h3></div>
+    <div class="panel"><h3>Combo Panel</h3></div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll(".card").forEach(card => {
+
+  card.addEventListener("mouseenter", () => {
+    card.classList.remove("leave");
+    card.classList.add("active");
+  });
+
+  card.addEventListener("mouseleave", () => {
+    if(card.classList.contains("slide-in-out")){
+      card.classList.add("leave");
+      setTimeout(()=>{
+        card.classList.remove("active","leave");
+      },600);
+    }else{
+      card.classList.remove("active");
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>

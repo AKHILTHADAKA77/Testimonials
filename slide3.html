@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Top Bottom Slide Cards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#020617;
+  font-family:system-ui;
+}
+
+/* grid */
+.wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
+  width:90%;
+  max-width:1000px;
+}
+
+/* card */
+.card{
+  height:180px;
+  background:#020617;
+  color:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+/* front */
+.front{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:2;
+}
+
+/* panel */
+.panel{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  transition:transform .6s cubic-bezier(.25,.8,.25,1);
+}
+
+/* ---------- TOP / BOTTOM EFFECTS ---------- */
+
+/* from top */
+.from-top .panel{
+  transform:translateY(-100%);
+}
+.from-top.active .panel{
+  transform:translateY(0);
+}
+
+/* from bottom */
+.from-bottom .panel{
+  transform:translateY(100%);
+}
+.from-bottom.active .panel{
+  transform:translateY(0);
+}
+
+/* out to top */
+.out-top .panel{
+  transform:translateY(0);
+}
+.out-top.active .panel{
+  transform:translateY(-100%);
+}
+
+/* out to bottom */
+.out-bottom .panel{
+  transform:translateY(0);
+}
+.out-bottom.active .panel{
+  transform:translateY(100%);
+}
+
+h3{margin:0;font-weight:600}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- CARD 1 -->
+  <div class="card from-top">
+    <div class="front"><h3>From TOP</h3></div>
+    <div class="panel"><h3>TOP</h3></div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card from-bottom">
+    <div class="front"><h3>From BOTTOM</h3></div>
+    <div class="panel"><h3>BOTTOM</h3></div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card out-top">
+    <div class="front"><h3>Out To TOP</h3></div>
+    <div class="panel"><h3>OUT TOP</h3></div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card out-bottom">
+    <div class="front"><h3>Out To BOTTOM</h3></div>
+    <div class="panel"><h3>OUT BOTTOM</h3></div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mouseenter",()=>{
+    card.classList.add("active");
+  });
+
+  card.addEventListener("mouseleave",()=>{
+    card.classList.remove("active");
+  });
+});
+</script>
+
+</body>
+</html>

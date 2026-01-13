@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Typewriter then Show Sections</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: #fff;
+  padding: 120px 8vw;
+}
+
+/* TYPEWRITER */
+.typewriter {
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  max-width: 900px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #38bdf8;
+  margin-left: 6px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,100% {opacity:1}
+  50% {opacity:0}
+}
+
+/* SECTIONS */
+.sections {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+
+  /* hidden initially */
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.card {
+  background: linear-gradient(145deg, #020617, #020617);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TYPEWRITER -->
+<div class="typewriter" id="tw">
+This text types first.
+When typing ends,
+sections will appear below.
+</div>
+
+<!-- SECTIONS -->
+<div class="sections" id="sections">
+  <div class="card">
+    <h3>Fast</h3>
+    <p>Optimized animations with clean logic.</p>
+  </div>
+  <div class="card">
+    <h3>Modern</h3>
+    <p>Professional UI and smooth motion.</p>
+  </div>
+  <div class="card">
+    <h3>Scalable</h3>
+    <p>Easy to extend with GSAP or CSS.</p>
+  </div>
+</div>
+
+<script>
+const el = document.getElementById("tw");
+const sections = document.getElementById("sections");
+const text = el.textContent;
+el.textContent = "";
+
+// cursor
+const cursor = document.createElement("span");
+cursor.className = "cursor";
+el.appendChild(cursor);
+
+let i = 0;
+
+function type() {
+  if (i < text.length) {
+    el.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+    i++;
+    setTimeout(type, 45);
+  } else {
+    showSections();
+  }
+}
+
+function showSections() {
+  sections.style.transition = "all 0.8s ease";
+  sections.style.opacity = "1";
+  sections.style.transform = "translateY(0)";
+}
+
+type();
+</script>
+
+</body>
+</html>

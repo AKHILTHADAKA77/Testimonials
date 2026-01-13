@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slow Color Fill Slide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --fill-time: 1.8s; /* SLOW FILL */
+  --ease: cubic-bezier(.4,0,.2,1);
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#020617;
+  font-family:system-ui;
+}
+
+/* grid */
+.wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:32px;
+  width:90%;
+  max-width:1000px;
+}
+
+/* card */
+.card{
+  height:180px;
+  background:#020617;
+  color:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+/* content */
+.content{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:grid;
+  place-items:center;
+}
+
+/* fill layer */
+.fill{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  transform:scaleY(0);
+  transition:transform var(--fill-time) var(--ease);
+  z-index:1;
+}
+
+/* ---------- DIRECTIONS ---------- */
+
+/* top → bottom */
+.from-top .fill{
+  transform-origin:top;
+}
+.from-top:hover .fill{
+  transform:scaleY(1);
+}
+
+/* bottom → top */
+.from-bottom .fill{
+  transform-origin:bottom;
+}
+.from-bottom:hover .fill{
+  transform:scaleY(1);
+}
+
+/* left → right */
+.from-left .fill{
+  transform-origin:left;
+  transform:scaleX(0);
+}
+.from-left:hover .fill{
+  transform:scaleX(1);
+}
+
+/* right → left */
+.from-right .fill{
+  transform-origin:right;
+  transform:scaleX(0);
+}
+.from-right:hover .fill{
+  transform:scaleX(1);
+}
+
+h3{
+  margin:0;
+  font-weight:600;
+  letter-spacing:.4px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <div class="card from-top">
+    <div class="fill"></div>
+    <div class="content"><h3>Fill Top → Bottom</h3></div>
+  </div>
+
+  <div class="card from-bottom">
+    <div class="fill"></div>
+    <div class="content"><h3>Fill Bottom → Top</h3></div>
+  </div>
+
+  <div class="card from-left">
+    <div class="fill"></div>
+    <div class="content"><h3>Fill Left → Right</h3></div>
+  </div>
+
+  <div class="card from-right">
+    <div class="fill"></div>
+    <div class="content"><h3>Fill Right → Left</h3></div>
+  </div>
+
+</div>
+
+</body>
+</html>

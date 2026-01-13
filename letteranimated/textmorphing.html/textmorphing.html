@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Text Morphing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0b0f14;
+    font-family: system-ui, sans-serif;
+  }
+
+  .morph{
+    font-size:clamp(2.5rem,6vw,5rem);
+    font-weight:800;
+    color:#fff;
+    letter-spacing:0.05em;
+    display:flex;
+    gap:.05em;
+  }
+
+  .char{
+    display:inline-block;
+    filter: blur(10px);
+    opacity:0;
+    transform: translateY(40px) scale(.4) rotateX(90deg);
+  }
+</style>
+</head>
+<body>
+
+<div class="morph" id="text"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script>
+const words = ["DESIGN", "CREATE", "ANIMATE", "INSPIRE"];
+const el = document.getElementById("text");
+let index = 0;
+
+function setText(word){
+  el.innerHTML = "";
+  [...word].forEach(letter=>{
+    const span = document.createElement("span");
+    span.className = "char";
+    span.textContent = letter;
+    el.appendChild(span);
+  });
+}
+
+function animateIn(){
+  gsap.to(".char",{
+    y:0,
+    opacity:1,
+    scale:1,
+    rotateX:0,
+    filter:"blur(0px)",
+    duration:0.8,
+    ease:"power4.out",
+    stagger:0.05
+  });
+}
+
+function animateOut(next){
+  gsap.to(".char",{
+    y:-40,
+    opacity:0,
+    scale:1.4,
+    rotateX:-90,
+    filter:"blur(12px)",
+    duration:0.6,
+    ease:"power4.in",
+    stagger:0.04,
+    onComplete:()=>{
+      setText(next);
+      animateIn();
+    }
+  });
+}
+
+setText(words[index]);
+animateIn();
+
+setInterval(()=>{
+  index = (index + 1) % words.length;
+  animateOut(words[index]);
+}, 2200);
+</script>
+
+</body>
+</html>

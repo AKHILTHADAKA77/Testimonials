@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Left Right Slide Cards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#020617;
+  font-family:system-ui;
+}
+
+/* grid */
+.wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:30px;
+  width:90%;
+  max-width:1000px;
+}
+
+/* card */
+.card{
+  height:180px;
+  background:#020617;
+  color:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+/* front */
+.front{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:2;
+}
+
+/* panel */
+.panel{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  transition:transform .6s cubic-bezier(.25,.8,.25,1);
+}
+
+/* ---------- LEFT RIGHT EFFECTS ---------- */
+
+/* slide left */
+.slide-left .panel{
+  transform:translateX(100%);
+}
+.slide-left.active .panel{
+  transform:translateX(0);
+}
+
+/* slide right */
+.slide-right .panel{
+  transform:translateX(-100%);
+}
+.slide-right.active .panel{
+  transform:translateX(0);
+}
+
+/* slide in from left */
+.slide-in-left .panel{
+  transform:translateX(-100%);
+}
+.slide-in-left.active .panel{
+  transform:translateX(0);
+}
+
+/* slide out to right */
+.slide-out-right .panel{
+  transform:translateX(0);
+}
+.slide-out-right.active .panel{
+  transform:translateX(100%);
+}
+
+h3{margin:0;font-weight:600}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- CARD 1 -->
+  <div class="card slide-left">
+    <div class="front"><h3>Slide LEFT</h3></div>
+    <div class="panel"><h3>LEFT</h3></div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card slide-right">
+    <div class="front"><h3>Slide RIGHT</h3></div>
+    <div class="panel"><h3>RIGHT</h3></div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card slide-in-left">
+    <div class="front"><h3>In From LEFT</h3></div>
+    <div class="panel"><h3>IN</h3></div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card slide-out-right">
+    <div class="front"><h3>Out To RIGHT</h3></div>
+    <div class="panel"><h3>OUT</h3></div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mouseenter",()=>{
+    card.classList.add("active");
+  });
+
+  card.addEventListener("mouseleave",()=>{
+    card.classList.remove("active");
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Wave Motion Text</title>
+<style>
+body{
+  background:#0b0b0f;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:Poppins, sans-serif;
+}
+
+.wave{
+  font-size:90px;
+  font-weight:800;
+  color:#fff;
+}
+
+.wave span{
+  display:inline-block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wave">WAVE MOTION</div>
+
+<script>
+const text = document.querySelector(".wave");
+text.innerHTML = [...text.textContent]
+  .map(l => `<span>${l}</span>`)
+  .join("");
+
+let t = 0;
+
+function animate(){
+  document.querySelectorAll(".wave span").forEach((span,i)=>{
+    const y = Math.sin(t + i * 0.4) * 20;
+    span.style.transform = `translateY(${y}px)`;
+  });
+  t += 0.05;
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

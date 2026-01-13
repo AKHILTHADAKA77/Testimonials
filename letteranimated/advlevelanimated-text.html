@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Staggered Letter Animation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0f172a;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Text wrapper */
+.text{
+    font-size:64px;
+    font-weight:700;
+    color:#e5e7eb;
+    letter-spacing:2px;
+    overflow:hidden;
+}
+
+/* Each letter */
+.char{
+    display:inline-block;
+    transform:translateY(100%);
+    opacity:0;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="text">STAGGERED LETTER</h1>
+
+<script>
+/* Split text into letters */
+const text = document.querySelector(".text");
+const letters = text.textContent.split("");
+text.textContent = "";
+
+letters.forEach(letter => {
+    const span = document.createElement("span");
+    span.classList.add("char");
+    span.innerHTML = letter === " " ? "&nbsp;" : letter;
+    text.appendChild(span);
+});
+
+/* GSAP stagger animation */
+gsap.to(".char", {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+    ease: "power4.out",
+    stagger: 0.06
+});
+</script>
+
+</body>
+</html>

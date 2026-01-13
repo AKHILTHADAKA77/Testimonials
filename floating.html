@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Floating Text</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#020617;
+  font-family:system-ui;
+}
+
+/* floating text */
+.floating-text{
+  font-size:48px;
+  font-weight:700;
+  color:#fff;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* smooth float */
+@keyframes float{
+  0%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-18px);
+  }
+  100%{
+    transform:translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="floating-text">Floating Text</div>
+
+</body>
+</html>

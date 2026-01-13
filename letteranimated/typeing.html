@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Typewriter – Guaranteed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background: #0f172a;
+  color: white;
+  padding: 120px 8vw;
+  font-family: system-ui, sans-serif;
+}
+
+.typewriter {
+  font-size: 48px;
+  font-weight: 600;
+  white-space: pre-wrap;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #38bdf8;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,100% {opacity:1}
+  50% {opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="typewriter" id="tw">
+This text WILL show.
+It types one character at a time.
+If you see this, it works.
+</div>
+
+<script>
+const el = document.getElementById("tw");
+const text = el.textContent;
+el.textContent = "";
+
+const cursor = document.createElement("span");
+cursor.className = "cursor";
+el.appendChild(cursor);
+
+let i = 0;
+function type() {
+  if (i < text.length) {
+    el.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+    i++;
+    setTimeout(type, 50);
+  }
+}
+type();
+</script>
+
+</body>
+</html>

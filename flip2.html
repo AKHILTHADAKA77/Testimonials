@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GSAP Smooth Glass Flip</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 20% 20%, #0ea5e9, transparent 40%),
+        radial-gradient(circle at 80% 80%, #9333ea, transparent 40%),
+        linear-gradient(135deg,#020617,#020617);
+}
+
+/* ================= LAYOUT ================= */
+.wrapper{
+    display:flex;
+    gap:100px;
+}
+
+/* ================= CARD ================= */
+.flip-card{
+    width:320px;
+    height:180px;
+    perspective:2000px;
+}
+
+/* ================= INNER ================= */
+.flip-inner{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+}
+
+/* ================= FACE ================= */
+.face{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:3px;
+    color:#fff;
+    border-radius:24px;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+
+    /* Glass base */
+    background:
+        linear-gradient(135deg,
+            rgba(255,255,255,0.35),
+            rgba(255,255,255,0.05)
+        );
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.45);
+
+    box-shadow:
+        inset 0 0 40px rgba(255,255,255,0.35),
+        0 50px 100px rgba(0,0,0,0.9);
+
+    overflow:hidden;
+}
+
+/* ================= COLOR TINT ================= */
+.front{
+    background:
+        linear-gradient(135deg,
+            rgba(14,165,233,0.75),
+            rgba(59,130,246,0.55)
+        ),
+        rgba(255,255,255,0.25);
+}
+
+.back{
+    background:
+        linear-gradient(135deg,
+            rgba(249,115,22,0.75),
+            rgba(239,68,68,0.55)
+        ),
+        rgba(255,255,255,0.25);
+}
+
+/* ================= SAFE GLASS LIGHT ================= */
+.face::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        120deg,
+        transparent 35%,
+        rgba(255,255,255,0.6),
+        transparent 70%
+    );
+    opacity:0.6;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- FLIP X -->
+    <div class="flip-card flip-x">
+        <div class="flip-inner">
+            <div class="face front">FLIP X</div>
+            <div class="face back">BACK X</div>
+        </div>
+    </div>
+
+    <!-- FLIP Y -->
+    <div class="flip-card flip-y">
+        <div class="flip-inner">
+            <div class="face front">FLIP Y</div>
+            <div class="face back">BACK Y</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/* ================= GSAP LOGIC ================= */
+
+// Flip X
+const flipX = document.querySelector(".flip-x .flip-inner");
+gsap.set(flipX.querySelector(".back"), { rotationX: 180 });
+
+flipX.parentElement.addEventListener("mouseenter", () => {
+    gsap.to(flipX, {
+        rotationX: 180,
+        duration: 1.2,
+        ease: "power4.out"
+    });
+});
+
+flipX.parentElement.addEventListener("mouseleave", () => {
+    gsap.to(flipX, {
+        rotationX: 0,
+        duration: 1.1,
+        ease: "power4.inOut"
+    });
+});
+
+// Flip Y
+const flipY = document.querySelector(".flip-y .flip-inner");
+gsap.set(flipY.querySelector(".back"), { rotationY: 180 });
+
+flipY.parentElement.addEventListener("mouseenter", () => {
+    gsap.to(flipY, {
+        rotationY: 180,
+        duration: 1.2,
+        ease: "power4.out"
+    });
+});
+
+flipY.parentElement.addEventListener("mouseleave", () => {
+    gsap.to(flipY, {
+        rotationY: 0,
+        duration: 1.1,
+        ease: "power4.inOut"
+    });
+});
+</script>
+
+</body>
+</html>

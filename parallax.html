@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GSAP Parallax Text</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 20% 20%, #2563eb55, transparent 40%),
+        radial-gradient(circle at 80% 80%, #9333ea55, transparent 40%),
+        linear-gradient(135deg,#020617,#020617);
+    overflow:hidden;
+}
+
+/* ================= WRAPPER ================= */
+.scene{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    perspective:1200px;
+}
+
+/* ================= TEXT LAYERS ================= */
+.parallax-text{
+    position:absolute;
+    font-weight:900;
+    letter-spacing:6px;
+    user-select:none;
+    white-space:nowrap;
+}
+
+/* Depth layers */
+.layer-back{
+    font-size:120px;
+    color:rgba(255,255,255,0.08);
+    filter:blur(1px);
+}
+
+.layer-mid{
+    font-size:96px;
+    background:linear-gradient(135deg,#22d3ee,#3b82f6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.layer-front{
+    font-size:72px;
+    background:linear-gradient(135deg,#a855f7,#ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 30px 60px rgba(0,0,0,0.8);
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+    <div class="parallax-text layer-back">PARALLAX</div>
+    <div class="parallax-text layer-mid">PARALLAX</div>
+    <div class="parallax-text layer-front">PARALLAX</div>
+</div>
+
+<script>
+/* ================= GSAP PARALLAX ================= */
+
+const layers = [
+    { el: ".layer-back",  depth: 10 },
+    { el: ".layer-mid",   depth: 25 },
+    { el: ".layer-front", depth: 45 }
+];
+
+document.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth  - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+    layers.forEach(layer => {
+        gsap.to(layer.el, {
+            x: x * layer.depth,
+            y: y * layer.depth,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+    });
+});
+</script>
+
+</body>
+</html>

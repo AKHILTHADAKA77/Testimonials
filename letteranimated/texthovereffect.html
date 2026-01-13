@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced GSAP Text Animation</title>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at top,#0d0d0d,#000);
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
+}
+
+.scene{
+  perspective:1200px;
+}
+
+.text{
+  font-size:clamp(3rem,8vw,8rem);
+  font-weight:900;
+  letter-spacing:.1em;
+  color:#fff;
+  cursor:pointer;
+}
+
+.char{
+  display:inline-block;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+
+.glow{
+  text-shadow:
+    0 0 20px rgba(120,150,255,.35),
+    0 0 40px rgba(120,150,255,.2);
+}
+
+.hint{
+  position:fixed;
+  bottom:20px;
+  font-size:14px;
+  color:#888;
+}
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="text glow" id="text">ADVANCED</div>
+</div>
+
+<div class="hint">Click to explode / reform</div>
+
+<script>
+const text = document.getElementById("text");
+const chars = [...text.textContent];
+text.textContent="";
+
+// split text
+chars.forEach(c=>{
+  const s=document.createElement("span");
+  s.className="char";
+  s.textContent=c;
+  text.appendChild(s);
+});
+
+const letters = gsap.utils.toArray(".char");
+let active=false;
+
+/* ===========================
+   MASTER TIMELINE
+=========================== */
+const tl = gsap.timeline({paused:true});
+
+/* explode */
+tl.to(letters,{
+  duration:1.2,
+  x:()=>gsap.utils.random(-300,300),
+  y:()=>gsap.utils.random(-200,200),
+  z:()=>gsap.utils.random(-600,600),
+  rotationX:()=>gsap.utils.random(-360,360),
+  rotationY:()=>gsap.utils.random(-360,360),
+  ease:"power4.out",
+  stagger:{
+    each:0.03,
+    from:"center"
+  }
+})
+
+/* orbital spin */

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Color Glass Flip</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 20% 20%, #0ea5e9, transparent 40%),
+        radial-gradient(circle at 80% 80%, #9333ea, transparent 40%),
+        linear-gradient(135deg,#020617,#020617);
+}
+
+/* ================= LAYOUT ================= */
+.wrapper{
+    display:flex;
+    gap:90px;
+}
+
+/* ================= CARD ================= */
+.flip-card{
+    width:300px;
+    height:170px;
+    perspective:1800px;
+}
+
+/* ================= INNER ================= */
+.flip-inner{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ================= FLIP ================= */
+.flip-x:hover .flip-inner{
+    transform:rotateX(180deg);
+}
+.flip-y:hover .flip-inner{
+    transform:rotateY(180deg);
+}
+
+/* ================= GLASS FACE ================= */
+.face{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+    font-weight:800;
+    letter-spacing:3px;
+    color:#fff;
+    border-radius:22px;
+    backface-visibility:hidden;
+
+    /* 🔥 STRONG GLASS BASE */
+    background:
+        linear-gradient(135deg,
+            rgba(255,255,255,0.35),
+            rgba(255,255,255,0.05)
+        );
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+
+    border:1px solid rgba(255,255,255,0.45);
+
+    box-shadow:
+        inset 0 0 35px rgba(255,255,255,0.35),
+        inset 0 0 120px rgba(255,255,255,0.15),
+        0 40px 90px rgba(0,0,0,0.9);
+
+    transition:all 0.6s ease;
+    overflow:hidden;
+}
+
+/* ================= COLOR REFRACTION ================= */
+.face::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255,0,128,0.45), transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(0,255,255,0.45), transparent 40%);
+    mix-blend-mode:screen;
+    animation:moveLight 8s linear infinite;
+}
+
+@keyframes moveLight{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(20%,20%);}
+    100%{transform:translate(0,0);}
+}
+
+/* ================= FRONT COLOR ================= */
+.front{
+    background:
+        linear-gradient(135deg,
+            rgba(14,165,233,0.65),
+            rgba(59,130,246,0.45)
+        ),
+        rgba(255,255,255,0.2);
+}
+
+/* ================= BACK COLOR ================= */
+.back{
+    background:
+        linear-gradient(135deg,
+            rgba(249,115,22,0.65),
+            rgba(239,68,68,0.45)
+        ),
+        rgba(255,255,255,0.2);
+}
+
+/* ================= HOVER POWER ================= */
+.flip-card:hover .face{
+    backdrop-filter:blur(26px) saturate(200%);
+    -webkit-backdrop-filter:blur(26px) saturate(200%);
+    box-shadow:
+        inset 0 0 60px rgba(255,255,255,0.55),
+        0 60px 120px rgba(0,0,0,1);
+    transform:translateZ(20px);
+}
+
+/* ================= SHINE ================= */
+.face::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255,255,255,0.6),
+        transparent 70%
+    );
+    opacity:0.6;
+}
+
+/* ================= BACK ROTATION ================= */
+.flip-x .back{
+    transform:rotateX(180deg);
+}
+.flip-y .back{
+    transform:rotateY(180deg);
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- FLIP X -->
+    <div class="flip-card flip-x">
+        <div class="flip-inner">
+            <div class="face front">FLIP X</div>
+            <div class="face back">ADV</div>
+        </div>
+    </div>
+
+    <!-- FLIP Y -->
+    <div class="flip-card flip-y">
+        <div class="flip-inner">
+            <div class="face front">FLIP Y</div>
+            <div class="face back">PRO</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

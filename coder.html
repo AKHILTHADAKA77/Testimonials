@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All Bounce Typography</title>
+
+<!-- GSAP -->
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+  font-family:Inter,system-ui;
+}
+
+section{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  padding:80px 20px;
+  border-bottom:1px solid #222;
+}
+
+h1{
+  font-size:10vw;
+  font-weight:900;
+  letter-spacing:-0.05em;
+  line-height:1;
+  text-align:center;
+}
+
+.char{
+  display:inline-block;
+}
+
+button{
+  padding:14px 32px;
+  font-size:16px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  background:#fff;
+  color:#000;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 1. ELASTIC BOUNCE -->
+<section>
+  <h1 class="elastic">ELASTIC</h1>
+</section>
+
+<!-- 2. HEAVY BOUNCE -->
+<section>
+  <h1 class="heavy">HEAVY</h1>
+</section>
+
+<!-- 3. HOVER BOUNCE -->
+<section>
+  <h1 class="hover">HOVER ME</h1>
+</section>
+
+<!-- 4. SCROLL BOUNCE -->
+<section>
+  <h1 class="scroll">SCROLL</h1>
+</section>
+
+<!-- 5. WAVE BOUNCE -->
+<section>
+  <h1 class="wave">WAVE</h1>
+</section>
+
+<!-- 6. INFINITE BOUNCE -->
+<section>
+  <h1 class="infinite">INFINITE</h1>
+</section>
+
+<!-- 7. BUTTON BOUNCE -->
+<section>
+  <h1 class="btn-text">CLICK</h1>
+  <button id="bounceBtn">Bounce Text</button>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* Utility: split text */
+function split(el){
+  el.innerHTML = el.textContent
+    .split("")
+    .map(c=>`<span class="char">${c}</span>`)
+    .join("");
+}
+
+/* Split all */
+document.querySelectorAll("h1").forEach(split);
+
+/* 1. Elastic Bounce */
+gsap.from(".elastic .char",{
+  y:200,
+  scale:0.5,
+  opacity:0,
+  stagger:0.08,
+  duration:1.4,
+  ease:"elastic.out(1,0.35)"
+});
+
+/* 2. Heavy Bounce */
+gsap.from(".heavy .char",{
+  y:-300,
+  skewY:12,
+  stagger:0.06,
+  duration:1,
+  ease:"bounce.out"
+});
+
+/* 3. Hover Bounce */
+document.querySelector(".hover")
+.addEventListener("mouseenter",()=>{
+  gsap.fromTo(".hover .char",
+    {y:0},
+    {y:-25,stagger:0.04,yoyo:true,repeat:1,ease:"power2.out"}
+  );
+});
+
+/* 4. Scroll Bounce */
+gsap.from(".scroll .char",{
+  y:150,
+  scale:0.6,
+  opacity:0,
+  stagger:0.05,
+  ease:"elastic.out(1,0.5)",
+  scrollTrigger:{
+    trigger:".scroll",
+    start:"top 80%"
+  }
+});
+
+/* 5. Wave Bounce */
+gsap.to(".wave .char",{
+  y:-30,
+  stagger:{each:0.05,repeat:-1,yoyo:true},
+  ease:"sine.inOut"
+});
+
+/* 6. Infinite Bounce */
+gsap.to(".infinite .char",{
+  y:-40,
+  stagger:0.08,
+  duration:0.6,
+  ease:"power1.inOut",
+  yoyo:true,
+  repeat:-1
+});
+
+/* 7. Button Triggered Bounce */
+document.getElementById("bounceBtn")
+.addEventListener("click",()=>{
+  gsap.from(".btn-text .char",{
+    y:120,
+    scale:0.6,
+    stagger:0.06,
+    ease:"elastic.out(1,0.4)"
+  });
+});
+</script>
+
+</body>
+</html>
